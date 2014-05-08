@@ -1,0 +1,39 @@
+{
+  "name": "mock-yeah",
+  "description": "Mock API server",
+  "version": "0.0.1",
+  "homepage": "https://github.com/daptiv/mock-yeah",
+  "author": {
+    "name": "Jonathan Park",
+    "email": "jpark@daptiv.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:daptiv/mock-yeah"
+  },
+  "bugs": {
+    "url": "https://github.com/daptiv/mock-yeah/issues"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "keywords": [
+    "mock",
+    "apiary",
+    "blueprint"
+  ],
+  "dependencies": {
+    "grunt": "~0.4.4",
+    "time-grunt": "^0.3.1",
+    "underscore": "~1.6.0"
+  },
+  "devDependencies": {
+    "grunt-contrib-jshint": "^0.9.2",
+    "grunt-simple-mocha": "^0.4.0",
+    "chai": "^1.9.1",
+    "sinon": "^1.9.1"
+  }
+}
