@@ -1,6 +1,6 @@
 /*jshint node:true */
 var path = require('path'),
-    restify = require(path.resolve('./node_modules/restify/lib/index.js')),
+    restify = require(path.resolve('../node_modules/restify/lib/index.js')),
     createRoutes = require('./lib/createRoutes'),
     fs = require('fs');
 var server = restify.createServer();
