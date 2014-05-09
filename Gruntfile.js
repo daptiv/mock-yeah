@@ -8,8 +8,8 @@ module.exports = function (grunt) {
                 '!node_modules/**/*.js'
             ],
             options: {
-                jshintrc: '.jshintrc',
-            },
+                jshintrc: '.jshintrc'
+            }
         },
 
         simplemocha: {
@@ -22,11 +22,11 @@ module.exports = function (grunt) {
                 ui: 'bdd',
                 reporter: 'spec'
             }
-        },
+        }
     });
 
     // Default task.
-    grunt.registerTask('default', 'Build and run live tests and packaging', ['jshint', 'simplemocha']);
+    grunt.registerTask('default', 'run jshint and tests', ['jshint', 'simplemocha']);
 
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-simple-mocha');

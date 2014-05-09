@@ -4,22 +4,15 @@ var folderReader = require('./folderReader'),
     routeListSort = require('./routeListSort'),
     _ = require('underscore'),
     routeHandlerFactory = require('./routeHandlerFactory'),
-    paths = require('../../config/paths'),
     path = require('path');
 
-var SUPPORTED_METHODS = ['get', 'post', 'put', 'del'],
-    mockDataDir = paths.server.mockApiData.dir();
+var SUPPORTED_METHODS = ['get', 'post', 'put', 'del'];
 
-var mockApiLib = {};
-
-mockApiLib.extractRouteParams = function (route) {
-    return route.match(/(\:[^:\/]*)/gi);
-};
-
-
-function addRouteForFile(file, server) {
+function addRouteForFile(file, server, mockDataDir) {
     var normalized = path.normalize(mockDataDir),
         route = path.relative(normalized, file);
+
+    console.log('Route: ', route);
     if (route !== '') {
         SUPPORTED_METHODS.forEach(function (method) {
             console.log('creating routes for "' + route + '" with method', method);
@@ -32,7 +25,7 @@ function addRouteForFile(file, server) {
     }
 }
 
-function createRoutes(server) {
+function createRoutes(server, mockDataDir) {
     console.log(mockDataDir);
     folderReader.recursiveListDirectories(mockDataDir, function (file_list) {
         file_list = _.map(file_list, function (file) {
@@ -40,7 +33,7 @@ function createRoutes(server) {
         });
         file_list.sort(routeListSort);
         file_list.forEach(function (file) {
-            addRouteForFile(file, server);
+            addRouteForFile(file, server, mockDataDir);
         });
     });
 }
