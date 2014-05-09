@@ -10,6 +10,7 @@ function RouteHandler(options) {
     this.route = options.route;
     this.method = options.method;
     this.directory = options.directory;
+    this.response = options.response;
 }
 
 RouteHandler.prototype = {
@@ -41,14 +42,17 @@ RouteHandler.prototype = {
 
     handle: function (request, response) {
         var self = this;
+        if (this.response) {
+            var responseBody = this.response.body;
+            response.send(parseInt(this.response.name, 10), responseBody);
+        }
+
         this._getRouteFile(this.directory, request.params, this.route, this.method, function (file) {
             if (file) {
                 var blueprintPath = path.join(__dirname, '../../blueprints/gist-fox-api.md');
-                console.log(blueprintPath);
 
                 var blueprint = new Blueprint(blueprintPath);
                 blueprint.read().then(function (result) {
-                    console.log(result);
 
                     console.log('serving static data from', file);
                     response.send(200, self._getFileContents(self._getDirectory(self.directory, self.route) + '/' + file));

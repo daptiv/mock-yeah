@@ -7,6 +7,8 @@ var protagonist = require('protagonist'),
 function Blueprint(path) {
     var blueprintRaw = fs.readFileSync(path, 'utf8');
 
+
+
     return {
         read: function () {
             var deferred = Q.defer();
@@ -16,22 +18,11 @@ function Blueprint(path) {
                     return;
                 }
 
-                console.log(result.ast);
-                
-                deferred.resolve({
-                    "_links": {
-                        "self": { "href": "/gists/42" },
-                        "star": { "href": "/gists/42/star" },
-                    },
-                    "id": "42",
-                    "created_at": "2014-04-14T02:15:15Z",
-                    "description": "Description of Gist",
-                    "content": "String contents"
-                });
+                deferred.resolve(result);
             });
             return deferred.promise;
         }
-    }
+    };
 }
 
 module.exports = Blueprint;
