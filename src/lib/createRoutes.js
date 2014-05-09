@@ -12,7 +12,6 @@ function addRouteForFile(file, server, mockDataDir) {
     var normalized = path.normalize(mockDataDir),
         route = path.relative(normalized, file);
 
-    console.log('Route: ', route);
     if (route !== '') {
         SUPPORTED_METHODS.forEach(function (method) {
             console.log('creating routes for "' + route + '" with method', method);
@@ -26,7 +25,6 @@ function addRouteForFile(file, server, mockDataDir) {
 }
 
 function createRoutes(server, mockDataDir) {
-    console.log(mockDataDir);
     folderReader.recursiveListDirectories(mockDataDir, function (file_list) {
         file_list = _.map(file_list, function (file) {
             return file.replace(/#/g, ':');

@@ -9,7 +9,7 @@ if (fs.existsSync(process.env.PORT)) {
     fs.unlinkSync(process.env.PORT);
 }
 
-server.listen(process.env.PORT || 8080, function () {
+server.listen(process.env.PORT || 8080, process.env.url || '127.0.0.1', function () {
     console.log('%s listening at %s', server.name, server.url);
 });
 
