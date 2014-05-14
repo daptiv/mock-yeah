@@ -44,6 +44,7 @@ RouteHandler.prototype = {
         if (this.response) {
             var responseBody = JSON.parse(this.response.body);
             response.send(parseInt(this.response.name, 10), responseBody);
+            return;
         }
 
         this._getRouteFile(this.directory, request.params, this.route, this.method, function (file) {
