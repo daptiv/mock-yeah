@@ -19,7 +19,7 @@ describe('RouteHandler', function () {
 
     });
 
-    it('should handler should return 400 when a matching static data file is not found', function () {
+    it('should return 400 when a matching static data file is not found', function () {
         var routeFilesStub = sinon.stub(this.routeHandler, '_getRouteFiles');
         this.routeHandler.handle({
             params: {
@@ -33,7 +33,7 @@ describe('RouteHandler', function () {
         this.sendSpy.calledWith(400).should.be.true;
     });
 
-    it('should handler should return 200 and static response when a matching static data file is found', function () {
+    it('should return 200 and static response when a matching static data file is found', function () {
 
         var response = 'contents';
         sinon.stub(this.routeHandler, '_getFileContents').returns(response);
