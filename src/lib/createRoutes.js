@@ -5,7 +5,7 @@ var folderReader = require('./folderReader'),
     _ = require('underscore'),
     routeHandlerFactory = require('./routeHandlerFactory'),
     path = require('path'),
-    Blueprint = require('./Blueprint');
+    blueprint = require('./blueprint');
 
 var SUPPORTED_METHODS = ['get', 'post', 'put', 'del'];
 
@@ -28,7 +28,6 @@ function addRouteForFile(file, server, mockDataDir) {
 function createRoutes(server, mockDataDir) {
     var blueprintPath = path.join(__dirname, '../../blueprints/gist-fox-api.md');
 
-    var blueprint = new Blueprint();
     blueprint.read(blueprintPath).then(function (result) {
         var resources = _.flatten(_.pluck(result.ast.resourceGroups, 'resources'));
 
