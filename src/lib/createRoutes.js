@@ -33,7 +33,6 @@ function addRouteForFile(file, server) {
 }
 
 function createRoutes(server) {
-    console.log(mockDataDir);
     folderReader.recursiveListDirectories(mockDataDir, function (file_list) {
         file_list = _.map(file_list, function (file) {
             return file.replace(/#/g, ':');
