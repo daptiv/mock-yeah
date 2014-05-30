@@ -8,8 +8,8 @@ module.exports = function (grunt) {
                 '!node_modules/**/*.js'
             ],
             options: {
-                jshintrc: '.jshintrc',
-            },
+                jshintrc: '.jshintrc'
+            }
         },
 
         simplemocha: {
@@ -22,7 +22,7 @@ module.exports = function (grunt) {
                 ui: 'bdd',
                 reporter: 'spec'
             }
-        },
+        }
     });
 
     // Default task.
