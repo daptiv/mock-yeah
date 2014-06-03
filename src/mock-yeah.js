@@ -3,11 +3,17 @@
 var path = require('path'),
     restify = require(path.resolve('./node_modules/restify/lib/index.js')),
     createRoutes = require('./lib/createRoutes'),
-    fs = require('fs');
+    fs = require('fs'),
+    mockDataDir = process.argv[2];
 
 var server = restify.createServer();
 
-createRoutes(server, process.argv[2]);
+if (!mockDataDir) {
+    console.log('Usage: node mock-yeah.js <mockDataDirectory>');
+    return;
+}
+
+createRoutes(server, mockDataDir);
 if (fs.existsSync(process.env.PORT)) {
     fs.unlinkSync(process.env.PORT);
 }
