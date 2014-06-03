@@ -10,7 +10,7 @@ mock-yeah
 Mock Api Data
 =============
 
-Mock out any endpoint in the Ppm api in a couple simple steps
+Mock out any endpoint in a couple simple steps
 
 1. Make a folder that matches your endpoint
     1. If your endpoint is `something/:id
@@ -20,7 +20,7 @@ Mock out any endpoint in the Ppm api in a couple simple steps
     1. `touch something/#id/#id.get.json`
     1. supported methods are 'get', 'put', 'post', 'del'
     1. fill in whatever you expect the json to look like from the real api
-1. Access your data via `http://ppmspa.dev/something/myweirdid
+1. Access your data via `http://mymockserver.dev/something/myweirdid
 
 FAQ
 ---
