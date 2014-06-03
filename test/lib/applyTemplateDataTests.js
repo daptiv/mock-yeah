@@ -1,6 +1,5 @@
 var applyTemplateData = require('../../src/lib/applyTemplateData'),
-    chai = require('chai'),
-    _ = require('underscore');
+    chai = require('chai');
 
 describe('applyTemplateData', function () {
 
@@ -9,65 +8,89 @@ describe('applyTemplateData', function () {
     });
 
     it('should return original text when no template fields exist', function () {
-        var templateText = 'asdfghjkl;';
+        var template = {
+            key: 'asdfjkl;'
+        };
 
-        applyTemplateData(templateText, {}).should.equal(templateText);
+        applyTemplateData(template, {}).should.deep.equal(template);
     });
 
     it('should return original text when template data is null', function () {
-        var templateText = 'asdfghjkl;';
+        var template = {
+            key: 'asdfjkl;'
+        };
 
-        applyTemplateData(templateText, null).should.equal(templateText);
+        applyTemplateData(template, null).should.deep.equal(template);
     });
 
     it('should replace template field with data', function () {
-        var templateText = 'asdf{field}jkl;',
+        var template = {
+                key: 'asdf{field}jkl;'
+            },
             data = {
                 field: 'gh'
             };
 
-        applyTemplateData(templateText, data).should.equal('asdf' + data.field + 'jkl;');
+        applyTemplateData(template, data).should.deep.equal({ key: 'asdf' + data.field + 'jkl;'});
     });
 
-    it('should replace template field with empty string when no corresponding data is supplied', function () {
-        var templateText = 'asdf{field}jkl;';
+    it('should not replace template field when no corresponding data is supplied', function () {
+        var template = {
+            key: 'asdf{field}jkl;'
+        };
 
-        applyTemplateData(templateText, {}).should.equal('asdfjkl;');
+        applyTemplateData(template, {}).should.deep.equal(template);
     });
 
     it('should replace template field with empty string when corresponding data is null', function () {
-        var templateText = 'asdf{field}jkl;';
+        var template = {
+            key: 'asdf{fieldBlah}jkl;'
+        };
 
-        applyTemplateData(templateText, { field: null }).should.equal('asdfjkl;');
+        applyTemplateData(template, { fieldBlah: null }).should.deep.equal({ key: 'asdfjkl;' });
     });
 
     it('should return correct text when extra data is supplied', function () {
-        var templateText = 'asdf{field1}jkl;',
+        var template = {
+                key: 'asdf{field1}jkl;'
+            },
             data = {
                 field1: 'gh',
                 field2: 'qwerty'
             };
 
-        applyTemplateData(templateText, data).should.equal('asdf' + data.field1 + 'jkl;');
+        applyTemplateData(template, data).should.deep.equal({ key: 'asdf' + data.field1 + 'jkl;' });
     });
 
     it('should replace multiple unique template fields with data', function () {
-        var templateText = '{field1}{field2}{field3}',
+        var template = {
+                key1: '{field1}{field2}',
+                key2: '{field3}'
+            },
             data = {
                 field1: 'asdf',
                 field2: 'gh',
                 field3: 'jkl;'
             };
 
-        applyTemplateData(templateText, data).should.equal(_.values(data).join(''));
+        applyTemplateData(template, data).should.deep.equal({
+            key1: data.field1 + data.field2,
+            key2: data.field3
+        });
     });
 
     it('should replace multiple duplicate fields with data', function () {
-        var templateText = '{field}{field}{field}',
+        var template = {
+                key1: '{field}{field}',
+                key2: '{field}'
+            },
             data = {
                 field: 'qwerty'
             };
 
-        applyTemplateData(templateText, data).should.equal(data.field + data.field + data.field);
+        applyTemplateData(template, data).should.deep.equal({
+            key1: data.field + data.field,
+            key2: data.field
+        });
     });
 });

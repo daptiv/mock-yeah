@@ -33,9 +33,9 @@ describe('RouteHandler', function () {
         this.sendSpy.calledWith(400).should.be.true;
     });
 
-    it('should handler should return 200 and static response when a matching static data file is found', function () {
+    it('should return 200 and static response when a matching static data file is found', function () {
 
-        var response = 'contents';
+        var response = { key: 'contents' };
         sinon.stub(this.routeHandler, '_getFileContents').returns(response);
         var routeFilesStub = sinon.stub(this.routeHandler, '_getRouteFiles');
         this.routeHandler.handle({
@@ -43,7 +43,7 @@ describe('RouteHandler', function () {
                 is: 'this',
                 the: 'is',
                 route: 'theroute'
-            },
+            }
         }, this.response);
         routeFilesStub.yield([
             '#this.#is.#route.get.json',
