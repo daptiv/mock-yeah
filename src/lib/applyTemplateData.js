@@ -21,7 +21,11 @@ function applyTemplateData(template, data) {
     {
         var field = match[1];
         var keyExistsInData = _.contains(originalDataKeys, field);
-        data[field] = (keyExistsInData && !data[field]) ? '' : '{' + field + '}';
+        if (keyExistsInData) {
+            data[field] = data[field] || '';
+        } else {
+            data[field] = '{' + field + '}';
+        }
     }
 
     var templatedText = _.template(templateText, data, { interpolate: fieldFinder });

@@ -44,10 +44,10 @@ describe('applyTemplateData', function () {
 
     it('should replace template field with empty string when corresponding data is null', function () {
         var template = {
-            key: 'asdf{fieldBlah}jkl;'
+            key: 'asdf{field}jkl;'
         };
 
-        applyTemplateData(template, { fieldBlah: null }).should.deep.equal({ key: 'asdfjkl;' });
+        applyTemplateData(template, { field: null }).should.deep.equal({ key: 'asdfjkl;' });
     });
 
     it('should return correct text when extra data is supplied', function () {
