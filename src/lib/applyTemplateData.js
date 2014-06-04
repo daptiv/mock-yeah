@@ -5,7 +5,8 @@ var _ = require('underscore'),
 
 function applyTemplateData(template, data) {
     var match,
-        templateText;
+        templateText,
+        dataSuperset = {};
 
     if (!data) {
         return template;
@@ -22,13 +23,13 @@ function applyTemplateData(template, data) {
         var field = match[1];
         var keyExistsInData = _.contains(originalDataKeys, field);
         if (keyExistsInData) {
-            data[field] = data[field] || '';
+            dataSuperset[field] = data[field] || '';
         } else {
-            data[field] = '{' + field + '}';
+            dataSuperset[field] = '{' + field + '}';
         }
     }
 
-    var templatedText = _.template(templateText, data, { interpolate: fieldFinder });
+    var templatedText = _.template(templateText, dataSuperset, { interpolate: fieldFinder });
     return JSON.parse(templatedText);
 }
 
