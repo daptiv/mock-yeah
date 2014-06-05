@@ -3,7 +3,8 @@
 var path = require('path'),
     _ = require('underscore'),
     folderReader = require('./folderReader'),
-    mockFileNameProvider = require('./mockFileNameProvider');
+    mockFileNameProvider = require('./mockFileNameProvider'),
+    applyTemplateData = require('./applyTemplateData');
 
 function RouteHandler(options) {
     this.route = options.route;
@@ -41,10 +42,12 @@ RouteHandler.prototype = {
     handle: function (request, response) {
         this._getRouteFile(this.directory, request.params, this.route, this.method, function (file) {
             if (file) {
-                console.log('serving static data from', file);
-                response.send(200, this._getFileContents(this._getDirectory(this.directory, this.route) + '/' + file));
+                var filePath = path.join(this._getDirectory(this.directory, this.route), file);
+                console.log('serving static/templated data from', filePath.replace(/:/g, '#'));
+                var templateFile = this._getFileContents(filePath);
+                response.send(200, applyTemplateData(templateFile, request.params));
             } else {
-                var message = 'no static data available create a file named like #routeParam.#routeParam2.get.json at ' + this._getDirectory(this.directory, this.route);
+                var message = 'no static data available; create a file of the form #routeParam.#routeParam2.get.json at ' + this._getDirectory(this.directory, this.route);
                 console.error(message);
                 response.send(400, message);
             }

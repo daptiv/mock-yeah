@@ -10,7 +10,7 @@ describe('RouteHandler', function () {
         this.routeHandler = new RouteHandler({
             directory: 'mockData/folder',
             route: '/this/:is/:the/current/:route',
-            method: 'get',
+            method: 'get'
         });
         this.sendSpy = sinon.spy();
         this.response = {
@@ -33,9 +33,9 @@ describe('RouteHandler', function () {
         this.sendSpy.calledWith(400).should.be.true;
     });
 
-    it('should handler should return 200 and static response when a matching static data file is found', function () {
+    it('should return 200 and static response when a matching static data file is found', function () {
 
-        var response = 'contents';
+        var response = { key: 'contents' };
         sinon.stub(this.routeHandler, '_getFileContents').returns(response);
         var routeFilesStub = sinon.stub(this.routeHandler, '_getRouteFiles');
         this.routeHandler.handle({
@@ -43,12 +43,26 @@ describe('RouteHandler', function () {
                 is: 'this',
                 the: 'is',
                 route: 'theroute'
-            },
+            }
         }, this.response);
         routeFilesStub.yield([
             '#this.#is.#route.get.json',
             '#this.#is.theroute.get.json'
         ]);
         this.sendSpy.calledWith(200, response).should.be.true;
+    });
+
+    it('should return templated response when a matching parameter is found', function () {
+        this.routeHandler.route = '/:param';
+        var template = { parameter: '{param}' };
+        sinon.stub(this.routeHandler, '_getFileContents').returns(template);
+        var routeFilesStub = sinon.stub(this.routeHandler, '_getRouteFiles');
+        this.routeHandler.handle({
+            params: {
+                param: 'theValue'
+            }
+        }, this.response);
+        routeFilesStub.yield(['#param.get.json']);
+        this.sendSpy.calledWith(200, { parameter: 'theValue' }).should.be.true;
     });
 });
