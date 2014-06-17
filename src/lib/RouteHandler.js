@@ -49,7 +49,6 @@ RouteHandler.prototype = {
 
                 var queryStringParameters = url.parse(request.url, true).query;
                 var templateData = _.extend({}, queryStringParameters, request.params);
-                console.log(templateData);
 
                 response.send(200, applyTemplateData(templateFile, templateData));
             } else {
