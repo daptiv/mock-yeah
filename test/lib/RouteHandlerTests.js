@@ -43,7 +43,8 @@ describe('RouteHandler', function () {
                 is: 'this',
                 the: 'is',
                 route: 'theroute'
-            }
+            },
+            url: ''
         }, this.response);
         routeFilesStub.yield([
             '#this.#is.#route.get.json',
@@ -52,17 +53,18 @@ describe('RouteHandler', function () {
         this.sendSpy.calledWith(200, response).should.be.true;
     });
 
-    it('should return templated response when a matching parameter is found', function () {
-        this.routeHandler.route = '/:param';
-        var template = { parameter: '{param}' };
+    it('should return templated response when a matching parameters are found', function () {
+        this.routeHandler.route = '/:param1';
+        var template = { parameter: '{param1}', parameter2: '{param2}' };
         sinon.stub(this.routeHandler, '_getFileContents').returns(template);
         var routeFilesStub = sinon.stub(this.routeHandler, '_getRouteFiles');
         this.routeHandler.handle({
             params: {
-                param: 'theValue'
-            }
+                param1: 'theValue1'
+            },
+            url: 'test?param2=theValue2'
         }, this.response);
         routeFilesStub.yield(['#param.get.json']);
-        this.sendSpy.calledWith(200, { parameter: 'theValue' }).should.be.true;
+        this.sendSpy.calledWith(200, { parameter: 'theValue1', parameter2: 'theValue2' }).should.be.true;
     });
 });

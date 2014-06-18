@@ -26,23 +26,26 @@ Mock out any endpoint in a couple simple steps
 Template Fields <a name="templateFields"></a>
 ---------------
 
-URL parameters can be applied to template fields in your mock data.
+URL and query string parameters can be applied to template fields in your mock data.
 
 1. Add a template field to your mock data file. Template fields are identified by surrounding curly braces: `{field}`.
     - The field identifier must be alphanumeric and must not contain any whitespace.
     - The field identifier should match the corresponding URL parameter (case sensitive).
+    - If you have duplicate parameter names between URL and query string parameters, the URL parameters take precedence and "win." 
 1. Run mock-yeah and access the URL for your mock data.
-1. All template field instances will be replaced with the corresponding URL parameter, if present.
+1. All template field instances will be replaced with the corresponding URL or query string parameter, if present.
 
     ###Example
     ####person/#personId/#personId.get.json
         {
             id: "{personId}",
+            cached: {useCached},
             name: "John Doe"
         }
-    ####Response of GET http://mymockserver.dev/person/42
+    ####Response of GET http://mymockserver.dev/person/42?useCached=true
         {
             id: "42",
+            cached: true,
             name: "John Doe"
         }
 

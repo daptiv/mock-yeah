@@ -1,7 +1,7 @@
 {
   "name": "mock-yeah",
   "description": "Mock API server",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "homepage": "https://github.com/daptiv/mock-yeah",
   "author": {
     "name": "Jonathan Park",

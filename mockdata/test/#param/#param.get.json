@@ -1,3 +1,4 @@
 {
-    "yourParameter": "{param}"
+    "yourUrlParameter": "{param}",
+    "yourQueryStringParameter": "{param2}"
 }
