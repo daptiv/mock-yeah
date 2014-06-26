@@ -37,7 +37,11 @@ RouteHandler.prototype = {
     },
 
     getBoundHandler: function () {
-        return this.handle.bind(this);
+        return this.delayedHandle.bind(this);
+    },
+
+    delayedHandle: function (request, response) {
+        setTimeout(_.partial(this.handle, request, response).bind(this), process.env['MOCK_YEAH_DELAY'] || 100);
     },
 
     handle: function (request, response) {
