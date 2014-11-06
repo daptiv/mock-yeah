@@ -1,7 +1,6 @@
 /*jshint node:true */
 
-var path = require('path'),
-    restify = require('restify'),
+var restify = require('restify'),
     createRoutes = require('./lib/createRoutes'),
     fs = require('fs'),
     mockDataDir = process.argv[2],
