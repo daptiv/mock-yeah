@@ -25,10 +25,13 @@ module.exports = function (grunt) {
         }
     });
 
-    // Default task.
-    grunt.registerTask('default', 'Build and run live tests and packaging', ['jshint', 'simplemocha']);
-
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-simple-mocha');
+
+    // Default task.
+    grunt.registerTask('default', 'Build and run live tests and packaging', [
+        'jshint',
+        'simplemocha'
+    ]);
 };
 
