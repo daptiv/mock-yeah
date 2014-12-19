@@ -13,7 +13,9 @@ function applyTemplateData(template, data) {
         return template;
     }
 
-    if (_.isObject(template)) {
+    if (_.isString(template)) {
+        templateText = template;
+    } else {
         templateText = JSON.stringify(template);
     }
 

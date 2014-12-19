@@ -5,7 +5,8 @@ var path = require('path'),
     _ = require('underscore'),
     folderReader = require('./folderReader'),
     mockFileNameProvider = require('./mockFileNameProvider'),
-    applyTemplateData = require('./applyTemplateData');
+    applyTemplateData = require('./applyTemplateData'),
+    fs = require('fs');
 
 function RouteHandler(options) {
     this.route = options.route;
@@ -13,14 +14,18 @@ function RouteHandler(options) {
     this.directory = options.directory;
 }
 
+function replaceColonWithHash(str) {
+    return str.replace(/:/g, '#');
+}
+
 RouteHandler.prototype = {
 
     _getFileContents: function (file) {
-        return require(path.relative(__dirname, file.replace(/:/g, '#')));
+        return fs.readFileSync(replaceColonWithHash(file), {encoding: 'utf8'});
     },
 
     _getDirectory: function (directory, route) {
-        return path.join(directory, route.replace(/:/g, '#'));
+        return path.join(directory, replaceColonWithHash(route));
     },
 
     _getRouteFiles: function (directory, route, callback) {
@@ -48,7 +53,7 @@ RouteHandler.prototype = {
         this._getRouteFile(this.directory, request.params, this.route, this.method, function (file) {
             if (file) {
                 var filePath = path.join(this._getDirectory(this.directory, this.route), file);
-                console.log('serving static/templated data from', filePath.replace(/:/g, '#'));
+                console.log('serving static/templated data from', replaceColonWithHash(filePath));
                 var templateFile = this._getFileContents(filePath);
 
                 var queryStringParameters = url.parse(request.url, true).query;
