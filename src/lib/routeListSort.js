@@ -2,8 +2,9 @@
 
 
 function routeListSort(file) {
-    if (file.match(/\:/)) {
-        return 1;
+    var matches = file.match(/\:/g);
+    if (matches) {
+        return matches.length;
     }
     else {
         return 0;
