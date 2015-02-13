@@ -13,14 +13,16 @@ describe('routeListSort', function () {
             'file/as',
             'file/as/:a',
             'file/as/:a/route',
+            'file/as/:a/:thing',
             'file/as/aspecific/route'
         ].sort(routeListSort);
 
         sortedList.should.deep.equal([
             'file/as',
             'file/as/aspecific/route',
+            'file/as/:a',
             'file/as/:a/route',
-            'file/as/:a'
+            'file/as/:a/:thing'
         ]);
     });
 });

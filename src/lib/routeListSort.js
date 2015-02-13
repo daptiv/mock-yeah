@@ -1,13 +1,10 @@
 /*jshint node:true */
 
 
-function routeListSort(file) {
-    var matches = file.match(/\:/g);
-    if (matches) {
-        return matches.length;
-    }
-    else {
-        return 0;
-    }
+function routeListSort(fileA, fileB) {
+    var aMatches = fileA.match(/\:/g) || [],
+        bMatches = fileB.match(/\:/g) || [];
+
+    return aMatches.length - bMatches.length;
 }
 module.exports  = routeListSort;
